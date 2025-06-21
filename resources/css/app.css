@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+  --font-inter: "Inter Variable", "Times New Roman";
+  --interpolate-keywords: allow-keywords;
+  --interpolate-numeric: numeric-only;
+  --interpolate-inherit: inherit;
+  --interpolate-initial: initial;
+  --interpolate-revert: revert;
+  --interpolate-unset: unset;
+}
+
+@utility interpolate-* {
+  interpolate-size: --value(--interpolate- *);
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply font-inter;
+}
