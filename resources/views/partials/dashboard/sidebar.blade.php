@@ -1,5 +1,5 @@
 <aside id="sidebar"
-  class="w-64 flex-col lg:bg-white/50 bg-white flex min-h-screen border-gray-200 fixed left-0 top-0 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-lg">
+  class="w-64 flex-col bg-white flex min-h-screen border-gray-200 fixed left-0 top-0 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-lg">
   <div class="flex justify-between items-center px-5 h-18 border-b">
     <div class="flex items-center gap-2">
       <x-icon.grid class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl text-white p-1.5 size-10" />
