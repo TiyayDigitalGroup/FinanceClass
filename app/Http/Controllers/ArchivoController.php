@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Archivo;
 use App\Models\Curso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -108,8 +109,17 @@ class ArchivoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $archivo = Archivo::findOrFail($id);
+
+        // Elimina el archivo físico
+        Storage::disk('public')->delete($archivo->ruta);
+
+        // Elimina el registro en la BD
+        $archivo->delete();
+
+        return back()->with('success', 'Archivo eliminado correctamente.');
     }
+
 
     private function extraerTextoDocx($ruta): string
     {
