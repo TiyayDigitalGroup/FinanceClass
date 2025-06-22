@@ -32,10 +32,11 @@
         </div>
       </div>
 
-      <div class="flex items-center space-x-2">
-        <span id="chat-count" class="px-3 py-1 bg-white bg-opacity-20 text-stone-900 rounded-full text-sm font-medium">
-          0 preguntas
+      <div class="flex items-center px-3 py-1 bg-white bg-opacity-20 text-stone-900 rounded-full text-sm font-medium space-x-2">
+        <span id="chat-count">
+          0
         </span>
+        <span>preguntas</span>
       </div>
     </header>
     <main>
@@ -54,25 +55,10 @@
               <x-icon.trash />
             </button>
           </div>
-          <x-ui.button type="submit" variant="primary" id="chat-send" class="px-3 py-3">
+          <x-ui.button type="submit" variant="primary" id="chat-send" class="px-3 py-3 text-white/70">
             <x-icon.send />
           </x-ui.button>
         </form>
-
-        {{-- <div class="mt-4 flex flex-wrap gap-2">
-          <button
-            class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors duration-200">
-            📝 Resumen del curso
-          </button>
-          <button
-            class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors duration-200">
-            🎯 Conceptos clave
-          </button>
-          <button
-            class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors duration-200">
-            💪 Ejercicios
-          </button>
-        </div> --}}
       </div>
     </main>
   </div>
@@ -82,7 +68,7 @@
       <x-icon.arrow-left />
       Volver al contenido
     </x-ui.button>
-    <x-ui.button href="{{ route('cursos.examen', $curso->codigo) }}" variant="sunset" class="px-3 py-3">
+    <x-ui.button href="{{ route('cursos.examen', $curso->codigo) }}" variant="sunset" class="px-3 py-3 text-white">
       <x-icon.storm />
       Ir al examen
     </x-ui.button>

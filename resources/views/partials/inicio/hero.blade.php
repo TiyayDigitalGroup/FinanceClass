@@ -18,7 +18,7 @@
         Descubre el poder de la educación financiera. Aprende a manejar tu dinero, planificar tu futuro y tomar
         decisiones inteligentes que transformarán tu vida.
       </p>
-      <x-ui.button href="{{ route('cursos.index') }}" variant="primary" class="group mb-6 px-8 py-4">
+      <x-ui.button href="{{ route('cursos.index') }}" variant="primary" class="group mb-6 px-8 py-4 w-fit text-white hover:scale-101 shadow-md">
         Comienza ahora
         <x-icon.arrow-right class="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
       </x-ui.button>

@@ -19,7 +19,7 @@ class CursoFactory extends Factory
         return [
             'titulo' => $this->faker->sentence(3),
             'descripcion' => $this->faker->paragraph(),
-            'premium' => $this->faker->boolean(30), // 30% chance de ser premium
+            'premium' => $this->faker->boolean(30),
         ];
     }
 }

@@ -21,7 +21,7 @@ class ArchivoFactory extends Factory
         $ruta = 'cursos/' . $this->faker->uuid . '/' . $nombreOriginal;
 
         return [
-            'curso_id' => Curso::factory(), // o un id real si haces seed
+            'curso_id' => Curso::factory(),
             'titulo' => $this->faker->sentence(3),
             'nombre_original' => $nombreOriginal,
             'ruta' => $ruta,

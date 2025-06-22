@@ -28,10 +28,6 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route::middleware(['auth', 'admin'])->group(function () {
-//     Route::get('/dashboard', fn() => view('pages.dashboard'))->name('dashboard');
-// });
-
 Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::get('/', fn() => view('pages.dashboard.index'))->name('dashboard');
     Route::get('/usuarios', [UserController::class, 'index'])->name('dashboard.usuarios');

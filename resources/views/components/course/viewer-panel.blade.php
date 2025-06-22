@@ -23,28 +23,32 @@
   <template x-if="index < total">
     <div x-ref="viewer-iframe">
       @foreach ($curso->archivos as $i => $archivo)
-        <div x-show="index === {{ $i }}">
-          <x-course.viewer :archivo="$archivo" />
-        </div>
+      <div x-show="index === {{ $i }}">
+        <x-course.viewer :archivo="$archivo" />
+      </div>
       @endforeach
     </div>
   </template>
 
   <div class="mt-4 flex justify-between">
-    <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg" @click="index--" :disabled="index <= 0">
+    <button class="px-4 cursor-pointer py-2 bg-gray-200 text-gray-800 disabled:cursor-no-drop rounded-lg" @click="index--"
+      :disabled="index <= 0">
       ← Anterior
     </button>
 
     <template x-if="index + 1 < total">
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg" @click="index++">
+      <button class="px-4 cursor-pointer py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg"
+        @click="index++">
         Siguiente →
       </button>
     </template>
 
     <template x-if="index + 1 === total">
-      <a href="{{ route('cursos.chat', ['codigo' => $curso->codigo]) }}" class="px-4 py-2 bg-purple-600 text-white rounded-lg">
-        Ir al chat del curso →
-      </a>
+      <x-ui.button href="{{ route('cursos.chat', ['codigo' => $curso->codigo]) }}" variant="ocean"
+        class="group px-4 py-2 w-fit text-white hover:scale-101 shadow-md">
+        Ir al chat del curso
+        <x-icon.arrow-right class="size-4 ml-2 group-hover:translate-x-2 transition-transform" />
+      </x-ui.button>
     </template>
   </div>
 </section>

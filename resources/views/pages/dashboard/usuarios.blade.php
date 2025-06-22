@@ -247,142 +247,85 @@
   </div>
 </div>
 
-<div id="userModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+<div id="userModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 items-center  hidden justify-center p-4">
   <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-scale-in">
 
-    <div class="bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-6">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </div>
-          <div>
-            <h2 id="modalTitle" class="text-2xl font-bold text-white">Crear nuevo usuario</h2>
-            <p class="text-blue-100 text-sm">Completa la información del usuario</p>
-          </div>
-        </div>
-        <button onclick="closeModal()"
-          class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center text-white transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+    <header class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 flex items-center gap-2">
+      <x-icon.user class="size-10 p-2 rounded-lg bg-white/30 hover:bg-white/40 text-white" />
+      <div>
+        <h2 id="modalTitle" class="text-xl font-bold text-white">Crear nuevo usuario</h2>
+        <p class="text-blue-100 text-sm">Completa la información del usuario</p>
       </div>
-    </div>
+      <x-ui.button class="absolute top-4 right-4" onclick="closeModal()">
+        <x-icon.close class="bg-white/20 hover:bg-white/30 rounded-lg text-white size-8 p-2" />
+      </x-ui.button>
+    </header>
 
     <div class="p-4">
-      <form id="userForm" method="POST" action="{{ route('dashboard.usuarios.store') }}" class="space-y-4">
+      <form id="userForm" method="POST" action="{{ route('dashboard.usuarios.store') }}" class="space-y-2">
         @csrf
         <input type="hidden" id="userId" name="user_id">
         <input type="hidden" id="formMethod" name="_method" value="POST">
 
-        <div class="space-y-2">
-          <label for="name" class="block text-sm font-semibold text-gray-700">
-            Nombre completo *
-          </label>
-          <div class="relative group">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <input type="text" id="name" name="name" required
-              class="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 hover:bg-gray-50 focus:bg-white"
-              placeholder="Juan Pérez">
+        <fieldset>
+          <label for="name" class="mb-1 block">Nombre completo</label>
+          <div class="relative">
+            <input type="text" id="name" name="name" autocomplete="name"
+              class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+              placeholder="Juan Perez" required>
+            <x-icon.user class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
           </div>
-        </div>
-
-        <div class="space-y-2">
-          <label for="email" class="block text-sm font-semibold text-gray-700">
-            Correo electrónico *
-          </label>
-          <div class="relative group">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-              </svg>
-            </div>
-            <input type="email" id="email" name="email" required
-              class="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 hover:bg-gray-50 focus:bg-white"
-              placeholder="juan@email.com">
+        </fieldset>
+        <fieldset>
+          <label for="email" class="mb-1 block">Correo electrónico</label>
+          <div class="relative">
+            <input type="email" id="email" name="email" autocomplete="email"
+              class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+              placeholder="tu@email.com" required>
+            <x-icon.at class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
           </div>
-        </div>
-
-        <div class="space-y-2" id="passwordField">
-          <label for="password" class="block text-sm font-semibold text-gray-700">
-            Contraseña *
-          </label>
-          <div class="relative group">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <input type="password" id="password" name="password"
-              class="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 hover:bg-gray-50 focus:bg-white"
-              placeholder="••••••••">
+        </fieldset>
+        <fieldset id="passwordField">
+          <label for="password" class="mb-1 block">Contraseña</label>
+          <div class="relative">
+            <input type="password" id="password" name="password" autocomplete="current-password"
+              class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+              placeholder="••••••••" required>
+            <x-icon.lock class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
           </div>
-        </div>
-
-        <div class="space-y-2" id="passwordConfirmField">
-          <label for="password_confirmation" class="block text-sm font-semibold text-gray-700">
-            Confirmar contraseña *
-          </label>
-          <div class="relative group">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
+        </fieldset>
+        <fieldset id="passwordConfirmField">
+          <label for="password_confirmation" class="mb-1 block">Confirmar contraseña</label>
+          <div class="relative">
             <input type="password" id="password_confirmation" name="password_confirmation"
-              class="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 hover:bg-gray-50 focus:bg-white"
-              placeholder="••••••••">
+              autocomplete="current-password"
+              class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+              placeholder="••••••••" required>
+            <x-icon.check class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
           </div>
-        </div>
+        </fieldset>
 
-        <div class="space-y-2">
-          <label for="role_id" class="block text-sm font-semibold text-gray-700">
-            Rol del usuario *
-          </label>
-          <div class="relative group">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200"
-                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
+        <fieldset>
+          <label for="role_id" class="mb-1 block">Rol del usuario</label>
+          <div class="relative">
             <select name="role_id" id="role_id" required
-              class="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none">
+              class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm appearance-none">
               <option value="">Seleccionar rol</option>
               @foreach($roles as $role)
               <option value="{{ $role->id }}">{{ ucfirst($role->nombre) }}</option>
               @endforeach
             </select>
+            <x-icon.secure class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
           </div>
-        </div>
-
-        <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
-          <button type="button" onclick="closeModal()"
-            class="px-6 py-3 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium transition-colors">
+        </fieldset>
+        <fieldset class="flex justify-center gap-2">
+          <x-ui.button type="button" class="text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl p-2" onclick="closeModal()">
             Cancelar
-          </button>
-          <button type="submit" id="submitBtn"
-            class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-101">
+          </x-ui.button>
+          <x-ui.button type="submit" variant="primary" class="rounded-xl p-2 text-white" id="submitBtn">
             <span id="submitText">Crear Usuario</span>
-          </button>
-        </div>
+          </x-ui.button>
+        </fieldset>
       </form>
     </div>
   </div>

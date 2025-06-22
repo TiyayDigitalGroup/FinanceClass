@@ -61,7 +61,7 @@ class StatePoster extends Component
                 'titulo' => 'text-yellow-800',
                 'texto' => 'text-yellow-700',
                 'boton' => 'bg-yellow-600 hover:bg-yellow-700 text-white',
-                'svg' => 'alert',
+                'svg' => 'warning',
             ],
             'info' => [
                 'bg' => 'bg-blue-50',

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombre_original');
             $table->string('ruta');
             $table->string('tipo')->nullable();
-            $table->text('descripcion')->nullable(); // transcripción
+            $table->text('descripcion')->nullable();
             $table->timestamps();
         });
     }
