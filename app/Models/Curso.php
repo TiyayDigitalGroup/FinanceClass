@@ -18,11 +18,18 @@ class Curso extends Model
     {
         static::creating(function (Curso $curso) {
             $prefix = $curso->premium ? 'CP' : 'CG';
-            $nextId = (static::max('id') ?? 0) + 1;
-            $curso->codigo = $prefix . str_pad($nextId, 2, '0', STR_PAD_LEFT);
+            $ultimo = static::where('premium', $curso->premium)
+                ->orderByDesc('codigo')
+                ->pluck('codigo')
+                ->first();
+            $nextNumber = 1;
+            if ($ultimo && preg_match('/\d+$/', $ultimo, $matches)) {
+                $nextNumber = intval($matches[0]) + 1;
+            }
+            $curso->codigo = $prefix . str_pad($nextNumber, 2, '0', STR_PAD_LEFT);
         });
     }
-    
+
     public function archivos()
     {
         return $this->hasMany(Archivo::class);
