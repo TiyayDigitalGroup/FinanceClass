@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
 
 class CursoController extends Controller
@@ -20,6 +21,12 @@ class CursoController extends Controller
         return view('pages.cursos.index', compact('gratuitos', 'premium'));
     }
 
+    public function adminIndex()
+    {
+        $cursos = Curso::with('archivos')->get();
+        return view('pages.dashboard.cursos', compact('cursos'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -33,7 +40,34 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'premium' => 'required|boolean',
+            'archivo' => 'required|file|max:10240',
+            'archivo_titulo' => 'required|string|max:255',
+        ]);
+
+        $curso = Curso::create([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'premium' => $request->premium,
+        ]);
+
+        // Simula la lógica de ArchivoController@store internamente
+        $archivoController = new ArchivoController();
+        $archivoRequest = new Request([
+            'titulo' => $request->archivo_titulo,
+            'archivo' => $request->file('archivo'),
+        ]);
+        $archivoRequest->files->set('archivo', $request->file('archivo'));
+
+        app()->call([$archivoController, 'store'], [
+            'request' => $archivoRequest,
+            'curso' => $curso
+        ]);
+
+        return redirect()->route('dashboard.cursos')->with('success', 'Curso y archivo creado correctamente.');
     }
 
     /**
@@ -165,6 +199,9 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
-        //
+        $directorio = "cursos/{$curso->codigo}";
+        Storage::disk('public')->deleteDirectory($directorio);
+        $curso->delete();
+        return redirect()->route('dashboard.cursos')->with('success', 'Curso y sus archivos eliminados.');
     }
 }
