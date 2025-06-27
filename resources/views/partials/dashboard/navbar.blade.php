@@ -1,4 +1,4 @@
-<header class="bg-white sticky top-0 h-18 w-full border-b shadow-2xs flex items-center px-4 justify-between z-50">
+<header class="bg-white sticky top-0 h-18 w-full border-b shadow-2xs flex items-center px-4 justify-between z-40">
   <x-ui.button id="menu-toggle"
     class="lg:hidden text-gray-700 hover:text-blue-400 rounded-lg transition-colors duration-200">
     <x-icon.menu class="size-7" />

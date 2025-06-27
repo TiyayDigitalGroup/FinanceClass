@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Curso extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'titulo',
-        'descripcion',
-        'premium',
-    ];
+
+    protected $fillable = ['titulo', 'descripcion', 'premium'];
+
+    protected $casts = ['premium' => 'boolean'];
 
     protected static function booted(): void
     {
@@ -30,7 +30,7 @@ class Curso extends Model
         });
     }
 
-    public function archivos()
+    public function archivos(): HasMany
     {
         return $this->hasMany(Archivo::class);
     }

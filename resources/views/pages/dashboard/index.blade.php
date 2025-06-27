@@ -12,7 +12,7 @@
         <p class="text-gray-500 text-sm font-medium">Total Usuarios</p>
         <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">{{ rand(74, 266) }}</p>
       </div>
-      <x-icon.users class="size-10 lg:size-12 p-2.5 text-green-600 bg-green-100 rounded-xl group-hover:scale-110" />
+      <x-icon.users class="size-10 lg:size-12 p-2.5 text-green-600 bg-green-100 rounded-xl group-hover:scale-101" />
     </div>
   </div>
 
@@ -24,7 +24,7 @@
         <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">{{ rand(25, 99) }}</p>
       </div>
       <div
-        class="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+        class="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:scale-101 transition-transform duration-200">
         <svg class="w-5 h-5 lg:w-6 lg:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -41,7 +41,7 @@
         <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">{{ rand(45, 150) }}</p>
       </div>
       <div
-        class="w-10 h-10 lg:w-12 lg:h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+        class="w-10 h-10 lg:w-12 lg:h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:scale-101 transition-transform duration-200">
         <svg class="w-5 h-5 lg:w-6 lg:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
@@ -57,7 +57,7 @@
         <p class="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">${{ number_format(rand(5000, 25000)) }}</p>
       </div>
       <div
-        class="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+        class="w-10 h-10 lg:w-12 lg:h-12 bg-yellow-100 rounded-xl flex items-center justify-center group-hover:scale-101 transition-transform duration-200">
         <svg class="w-5 h-5 lg:w-6 lg:h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />

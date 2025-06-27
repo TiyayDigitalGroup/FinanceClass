@@ -23,37 +23,37 @@
     <form method="POST" action="{{ route('register') }}" class="space-y-2 mt-4">
       @csrf
       <fieldset>
-        <label for="name" class="mb-1 block">Nombre completo</label>
+        <label for="name" class="block mb-0.5">Nombre completo</label>
         <div class="relative">
           <input type="text" id="name" name="name" autocomplete="name"
-            class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+            class="w-full pl-10 py-1.5 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
             placeholder="Juan Perez" required>
           <x-icon.user class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
         </div>
       </fieldset>
       <fieldset>
-        <label for="email" class="mb-1 block">Correo electrónico</label>
+        <label for="email" class="block mb-0.5">Correo electrónico</label>
         <div class="relative">
           <input type="email" id="email" name="email" autocomplete="email"
-            class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+            class="w-full pl-10 py-1.5 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
             placeholder="tu@email.com" required>
           <x-icon.at class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
         </div>
       </fieldset>
       <fieldset>
-        <label for="password" class="mb-1 block">Contraseña</label>
+        <label for="password" class="block mb-0.5">Contraseña</label>
         <div class="relative">
           <input type="password" id="password" name="password" autocomplete="current-password"
-            class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+            class="w-full pl-10 py-1.5 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
             placeholder="••••••••" required>
           <x-icon.lock class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
         </div>
       </fieldset>
       <fieldset>
-        <label for="password_confirmation" class="mb-1 block">Confirmar contraseña</label>
+        <label for="password_confirmation" class="block mb-0.5">Confirmar contraseña</label>
         <div class="relative">
           <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="current-password"
-            class="w-full pl-10 py-2 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
+            class="w-full pl-10 py-1.5 border border-gray-200 rounded-2xl focus:ring-2 outline-none focus:ring-blue-400 transition-all duration-200 placeholder-gray-400 placeholder:text-sm"
             placeholder="••••••••" required>
           <x-icon.check class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 size-5" />
         </div>
