@@ -16,7 +16,7 @@
         <span class="w-6 h-6 flex items-center justify-center bg-blue-500 text-white rounded-full text-xs font-medium">
           {{ $i + 1 }}
         </span>
-        <span class="text-sm font-medium">{{ $archivo->titulo }}</span>
+        <span class="text-sm font-medium">{{ $archivo->title }}</span>
       </div>
       <x-icon.arrow-right class="w-4 h-4 text-gray-400" />
     </button>

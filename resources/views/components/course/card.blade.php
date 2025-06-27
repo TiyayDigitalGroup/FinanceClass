@@ -26,11 +26,11 @@
   </div>
 
   <h3 class="text-lg font-semibold text-gray-900 mb-2 {{ $textHoverClass }} transition-colors duration-200">
-    {{ $curso->titulo }}
+    {{ $curso->title }}
   </h3>
 
   <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-    {{ Str::limit($curso->descripcion, 80) }}
+    {{ Str::limit($curso->description, 80) }}
   </p>
 
   <x-icon.arrow-right

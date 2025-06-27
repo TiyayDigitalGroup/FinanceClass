@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Archivo;
-use App\Models\Curso;
+use App\Models\Course;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -32,15 +32,17 @@ class ArchivoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Curso $curso)
+    public function store(Request $request, Course $course)
     {
         $request->validate([
-            'archivo' => 'required|file|max:10240',
-            'titulo' => 'required|string|max:255',
+            'file' => 'required|file|max:10240',
+            'title' => 'required|string|max:255',
         ]);
 
-        $archivo = $request->file('archivo');
-        $directorio = "cursos/{$curso->codigo}";
+        Log::info('Curso recibido:', ['course_id' => $course->id ?? 'NULO']);
+
+        $archivo = $request->file('file');
+        $directorio = "cursos/{$course->code}";
         Storage::disk('public')->makeDirectory($directorio);
         $ruta = $archivo->store($directorio, 'public');
 
@@ -69,12 +71,12 @@ class ArchivoController extends Controller
             $texto = '[Error al procesar el archivo]';
         }
 
-        $curso->archivos()->create([
-            'nombre_original' => $archivo->getClientOriginalName(),
-            'titulo' => $request->input('titulo'),
-            'ruta' => str_replace('public/', '', $ruta),
-            'tipo' => $extension,
-            'descripcion' => $texto,
+        $course->files()->create([
+            'original_name' => $archivo->getClientOriginalName(),
+            'title' => $request->input('title'),
+            'path' => str_replace('public/', '', $ruta),
+            'type' => $extension,
+            'transcription' => $texto,
         ]);
 
         return back()->with('success', 'Archivo subido correctamente');
@@ -109,10 +111,10 @@ class ArchivoController extends Controller
      */
     public function destroy(string $id)
     {
-        $archivo = Archivo::findOrFail($id);
+        $archivo = File::findOrFail($id);
 
         // Elimina el archivo físico
-        Storage::disk('public')->delete($archivo->ruta);
+        Storage::disk('public')->delete($archivo->path);
 
         // Elimina el registro en la BD
         $archivo->delete();

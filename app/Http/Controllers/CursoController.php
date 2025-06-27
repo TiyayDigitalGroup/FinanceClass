@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Curso;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
@@ -15,15 +17,15 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $gratuitos = Curso::where('premium', false)->get();
-        $premium = Curso::where('premium', true)->get();
+        $gratuitos = Course::where('premium', false)->get();
+        $premium = Course::where('premium', true)->get();
 
         return view('pages.cursos.index', compact('gratuitos', 'premium'));
     }
 
     public function adminIndex()
     {
-        $cursos = Curso::with('archivos')->get();
+        $cursos = Course::with('files')->get();
         return view('pages.dashboard.cursos', compact('cursos'));
     }
 
@@ -41,30 +43,30 @@ class CursoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'premium' => 'required|boolean',
-            'archivo' => 'required|file|max:10240',
-            'archivo_titulo' => 'required|string|max:255',
+            'file' => 'required|file|max:10240',
+            'file_title' => 'required|string|max:255',
         ]);
 
-        $curso = Curso::create([
-            'titulo' => $request->titulo,
-            'descripcion' => $request->descripcion,
+        $curso = Course::create([
+            'title' => $request->title,
+            'description' => $request->description,
             'premium' => $request->premium,
         ]);
 
         // Simula la lógica de ArchivoController@store internamente
         $archivoController = new ArchivoController();
         $archivoRequest = new Request([
-            'titulo' => $request->archivo_titulo,
-            'archivo' => $request->file('archivo'),
+            'title' => $request->file_title,
+            'file' => $request->file('file'),
         ]);
-        $archivoRequest->files->set('archivo', $request->file('archivo'));
+        $archivoRequest->files->set('file', $request->file('file'));
 
         app()->call([$archivoController, 'store'], [
             'request' => $archivoRequest,
-            'curso' => $curso
+            'course' => $curso
         ]);
 
         return redirect()->route('dashboard.cursos')->with('success', 'Curso y archivo creado correctamente.');
@@ -75,13 +77,13 @@ class CursoController extends Controller
      */
     public function show(string $codigo)
     {
-        $curso = Curso::with('archivos')->where('codigo', $codigo)->firstOrFail();
+        $curso = Course::with('files')->where('code', $codigo)->firstOrFail();
         return view('pages.cursos.curso', compact('curso'));
     }
 
     public function chat(string $codigo)
     {
-        $curso = Curso::where('codigo', $codigo)->firstOrFail();
+        $curso = Course::where('code', $codigo)->firstOrFail();
         return view('pages.cursos.chat', compact('curso'));
     }
 
@@ -91,30 +93,30 @@ class CursoController extends Controller
             'pregunta' => 'required|string|max:500',
         ]);
 
-        $curso = Curso::where('codigo', $codigo)->with('archivos')->firstOrFail();
+        $curso = Course::where('code', $codigo)->with('files')->firstOrFail();
 
-        if ($curso->archivos->isEmpty()) {
+        if ($curso->files->isEmpty()) {
             return response('Este curso no tiene materiales para contextualizar.', 400);
         }
 
         $baseUrl = config('app.url');
 
         try {
-            $curso = Curso::where('codigo', $codigo)->firstOrFail();
+            $curso = Course::where('code', $codigo)->firstOrFail();
             $pregunta = $request->input('pregunta');
 
             $contexto = <<<EOT
-        Eres un tutor virtual especializado en el curso "{$curso->titulo}". Debes responder exclusivamente preguntas relacionadas con el contenido de este curso.
+        Eres un tutor virtual especializado en el curso "{$curso->title}". Debes responder exclusivamente preguntas relacionadas con el contenido de este curso.
         A continuación, se describen los materiales del curso. Usa esta información como referencia para tus respuestas:
         EOT;
 
-            foreach ($curso->archivos as $archivo) {
-                if (!empty($archivo->descripcion)) {
+            foreach ($curso->files as $archivo) {
+                if (!empty($archivo->transcription)) {
                     $contexto .= <<<EOT
                 [Archivo]
-                Nombre: {$archivo->nombre_original}
-                Título: {$archivo->titulo}
-                Descripción: {$archivo->descripcion}
+                Nombre: {$archivo->original_name}
+                Título: {$archivo->title}
+                Descripción: {$archivo->transcription}
                 EOT;
                 }
             }
@@ -125,7 +127,7 @@ class CursoController extends Controller
         - No inicies con saludos, ya hay uno automático antes de tu intervención.
         - No incluyas enlaces externos. Si necesitas mencionar uno, usa solo: "{$baseUrl}/cursos/{$codigo}".
         - Si haces referencia a materiales, menciona su título y sugiere que el usuario lo consulte dentro del curso.
-        - Nunca menciones el código interno del curso ("{$codigo}"); usa siempre el nombre completo: "{$curso->titulo}".
+        - Nunca menciones el código interno del curso ("{$codigo}"); usa siempre el nombre completo: "{$curso->title}".
         - Si detectas lenguaje inapropiado, responde con una advertencia y no continúes.
         - Si la pregunta no está relacionada con el curso, responde que no puedes ayudar y sugiere revisar el contenido disponible.
         EOT;
@@ -174,14 +176,84 @@ class CursoController extends Controller
 
     public function examen(string $codigo)
     {
-        $curso = Curso::where('codigo', $codigo)->firstOrFail();
-        return view('pages.cursos.examen', compact('curso'));
+        $curso = Course::where('code', $codigo)->firstOrFail();
+        $examen = $curso->exam()->with('questions.options')->first();
+
+        if (!$examen) {
+            abort(404, 'Este curso no tiene un examen disponible.');
+        }
+
+        return view('pages.cursos.examen', compact('curso', 'examen'));
     }
+
+    public function enviarExamen(Request $request, string $codigo)
+    {
+        $curso = Course::where('code', $codigo)->with('exam.questions.options')->firstOrFail();
+        $examen = $curso->exam;
+        if (!$examen) abort(404, 'Este curso no tiene examen.');
+
+        $data = $request->validate([
+            'respuestas' => 'required|array',
+            'respuestas.*' => 'integer|exists:options,id',
+        ]);
+
+        $respuestas = $data['respuestas'];
+        $preguntas = $examen->questions;
+        $total = $preguntas->count();
+        $correctas = 0;
+
+        foreach ($preguntas as $pregunta) {
+            if (($respuestas[$pregunta->id] ?? null) == $pregunta->options->where('is_correct', true)->first()->id) {
+                $correctas++;
+            }
+        }
+
+        $calificacion = round(($correctas / max($total, 1)) * 100, 2);
+        $aprobado = $calificacion >= 70;
+
+        $user = Auth::user();
+
+        // Comprobar si ya está inscrito
+        $pivot = $user->courses()->where('course_id', $curso->id)->first();
+
+        if ($pivot) {
+            // Update manual
+            DB::table('course_user')
+                ->where('user_id', $user->id)
+                ->where('course_id', $curso->id)
+                ->update([
+                    'grade' => $calificacion,
+                    'passed' => $aprobado,
+                    'last_attempt' => now(),
+                    'attempts' => DB::raw('attempts + 1'),
+                    'updated_at' => now(),
+                ]);
+        } else {
+            // Nuevo registro
+            $user->courses()->attach($curso->id, [
+                'grade' => $calificacion,
+                'passed' => $aprobado,
+                'last_attempt' => now(),
+                'attempts' => 1,
+            ]);
+        }
+
+        return redirect()
+            ->route('cursos.examen', $codigo)
+            ->with('resultado', [
+                'correctas' => $correctas,
+                'total' => $total,
+                'nota' => $calificacion,
+                'aprobado' => $aprobado,
+            ]);
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Curso $curso)
+    public function edit(Course $course)
     {
         //
     }
@@ -189,7 +261,7 @@ class CursoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request, Course $course)
     {
         //
     }
@@ -197,11 +269,11 @@ class CursoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Curso $curso)
+    public function destroy(Course $course)
     {
-        $directorio = "cursos/{$curso->codigo}";
+        $directorio = "cursos/{$course->code}";
         Storage::disk('public')->deleteDirectory($directorio);
-        $curso->delete();
+        $course->delete();
         return redirect()->route('dashboard.cursos')->with('success', 'Curso y sus archivos eliminados.');
     }
 }

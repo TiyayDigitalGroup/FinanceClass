@@ -21,7 +21,7 @@
         <x-ui.nav-link href="{{ route('simuladores') }}">Simuladores</x-ui.nav-link>
         <x-ui.nav-link href="{{ route('planes') }}">Planes</x-ui.nav-link>
         @auth
-          @if (Auth::user()->role->nombre === 'admin')
+          @if (Auth::user()->role->name === 'administrator')
             <x-ui.nav-link href="{{ route('dashboard') }}">Dashboard</x-ui.nav-link>
           @endif
         @endauth

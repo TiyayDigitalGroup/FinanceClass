@@ -2,14 +2,14 @@
 
 namespace App\View\Components\Course;
 
-use App\Models\Curso;
+use App\Models\Course;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Card extends Component
 {
-    public Curso $curso;
+    public Course $curso;
     public string $tipo;
     public string $color;
 
@@ -19,7 +19,7 @@ class Card extends Component
     public string $gradientFrom;
     public string $gradientTo;
 
-    public function __construct(Curso $curso, string $tipo = 'gratis', string $color = 'green')
+    public function __construct(Course $curso, string $tipo = 'gratis', string $color = 'green')
     {
         $this->curso = $curso;
         $this->tipo = $tipo;

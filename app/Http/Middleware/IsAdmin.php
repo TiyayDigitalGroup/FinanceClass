@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->role->nombre !== 'admin') {
+        if (!Auth::check() || Auth::user()->role->name !== 'administrator') {
             abort(403, 'Acceso denegado');
         }
 

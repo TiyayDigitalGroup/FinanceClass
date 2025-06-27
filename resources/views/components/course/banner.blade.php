@@ -11,11 +11,11 @@
   </div>
 
   <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">
-    {{ $curso->titulo }}
+    {{ $curso->title }}
   </h1>
 
   <p class="text-gray-600 max-w-3xl mx-auto leading-snug">
-    {{ $curso->descripcion }}
+    {{ $curso->description }}
   </p>
 
   <div class="grid grid-cols-2 gap-8 max-w-md mx-auto text-center">

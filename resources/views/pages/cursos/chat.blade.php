@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Curso | ' . $curso->titulo)
+@section('title', 'Curso | ' . $curso->title)
 @section('description', 'Descripción de la página')
 
 @section('content')
@@ -11,7 +11,7 @@
   </div>
 
   <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">
-    {{ $curso->titulo }}
+    {{ $curso->title }}
   </h1>
 
   <p class="text-gray-600 max-w-3xl mx-auto leading-snug">
@@ -63,12 +63,12 @@
     </main>
   </div>
   <footer class="flex justify-between mt-5">
-    <x-ui.button href="{{ route('cursos.show', $curso->codigo) }}"
+    <x-ui.button href="{{ route('cursos.show', $curso->code) }}"
       class="px-3 py-3 bg-gray-100 text-gray-700 hover:bg-gray-200">
       <x-icon.arrow-left />
       Volver al contenido
     </x-ui.button>
-    <x-ui.button href="{{ route('cursos.examen', $curso->codigo) }}" variant="sunset" class="px-3 py-3 text-white">
+    <x-ui.button href="{{ route('cursos.examen', $curso->code) }}" variant="sunset" class="px-3 py-3 text-white">
       <x-icon.storm />
       Ir al examen
     </x-ui.button>
@@ -88,7 +88,7 @@
     button: document.getElementById('chat-send'),
     counter: document.getElementById('chat-count'),
     clear: document.getElementById('chat-clear'),
-    curso: @json($curso->codigo)
+    curso: @json($curso->code)
   };
 
   function addMessage(text, isUser = false) {
@@ -170,6 +170,6 @@
         chat.messages.lastChild.innerHTML = `<span class="text-red-500">Error: ${err.message}</span>`;
       });
     });
-    addMessage(`¡Hola! 👋 Soy tu tutor virtual para el curso **{{ $curso->titulo }}**. Puedes preguntarme sobre los temas del contenido o pedir recomendaciones.`);
+    addMessage(`¡Hola! 👋 Soy tu tutor virtual para el curso **{{ $curso->title }}**. Puedes preguntarme sobre los temas del contenido o pedir recomendaciones.`);
 });
 </script>

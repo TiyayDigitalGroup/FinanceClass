@@ -6,12 +6,12 @@
       <div>
         <h2 class="text-xl font-bold text-gray-900">
           <span
-            x-text="$el.innerText = '{{ $curso->archivos[0]->titulo ?? 'Material' }}'; $watch('index', i => $el.innerText = '{{ $curso->archivos }}'[i]?.titulo ?? 'Material')">
+            x-text="$el.innerText = '{{ $curso->files[0]->title ?? 'Material' }}'; $watch('index', i => $el.innerText = '{{ $curso->files }}'[i]?.title ?? 'Material')">
           </span>
         </h2>
         <span class="flex items-center gap-1.5 text-sm text-gray-600">
           <x-icon.book class="size-4 inline-block" />
-          <span x-text="'Documento ' + '{{ $curso->archivos[0]->tipo ?? '' }}'"></span>
+          <span x-text="'Documento ' + '{{ $curso->files[0]->type ?? '' }}'"></span>
         </span>
       </div>
       <span class="px-3 py-1 h-fit bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
@@ -22,7 +22,7 @@
 
   <template x-if="index < total">
     <div x-ref="viewer-iframe">
-      @foreach ($curso->archivos as $i => $archivo)
+      @foreach ($curso->files as $i => $archivo)
       <div x-show="index === {{ $i }}">
         <x-course.viewer :archivo="$archivo" />
       </div>
@@ -44,7 +44,7 @@
     </template>
 
     <template x-if="index + 1 === total">
-      <x-ui.button href="{{ route('cursos.chat', ['codigo' => $curso->codigo]) }}" variant="ocean"
+      <x-ui.button href="{{ route('cursos.chat', ['codigo' => $curso->code]) }}" variant="ocean"
         class="group px-4 py-2 w-fit text-white hover:scale-101 shadow-md">
         Ir al chat del curso
         <x-icon.arrow-right class="size-4 ml-2 group-hover:translate-x-2 transition-transform" />

@@ -3,15 +3,16 @@
 namespace App\View\Components\Course;
 
 use App\Models\Archivo;
+use App\Models\File;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Viewer extends Component
 {
-    public Archivo $archivo;
+    public File $archivo;
 
-    public function __construct(Archivo $archivo)
+    public function __construct(File $archivo)
     {
         $this->archivo = $archivo;
     }

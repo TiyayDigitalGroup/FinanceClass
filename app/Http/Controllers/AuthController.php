@@ -26,7 +26,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
-            return redirect()->route($user->role->nombre === 'admin' ? 'dashboard' : 'inicio');
+            return redirect()->route($user->role->name === 'administrator' ? 'dashboard' : 'inicio');
         }
 
         return back()->withErrors([
@@ -42,7 +42,7 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        $defaultRole = Role::where('nombre', 'estudiante')->firstOrFail();
+        $defaultRole = Role::where('name', 'student')->firstOrFail();
 
         $user = User::create([
             'name'     => $request->name,

@@ -15,7 +15,7 @@
         <x-icon.book class="text-white size-12 p-2 rounded-xl bg-green-500" />
         @endif
         <div>
-          <h3 class="text-xl font-bold text-gray-900">{{ $curso->titulo }}</h3>
+          <h3 class="text-xl font-bold text-gray-900">{{ $curso->title }}</h3>
           <span
             class="px-3 py-1 rounded-full text-xs {{ $tipo === 'premium' ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800' }}">
             {{ strtoupper($tipo) }}
@@ -30,7 +30,7 @@
       <div>
         <h4 class="text-lg font-semibold text-gray-900">Descripción del curso</h4>
         <p class="text-gray-600 leading-tight text-sm">
-          {{ $curso->descripcion ?? 'Este curso aún no tiene descripción.' }}
+          {{ $curso->description ?? 'Este curso aún no tiene descripción.' }}
         </p>
       </div>
     </div>
@@ -43,7 +43,7 @@
         </button>
       </form>
       <x-ui.button variant="primary" class="px-6 py-3 flex-1 text-white"
-        href="{{ route('cursos.show', ['codigo' => $curso->codigo]) }}">
+        href="{{ route('cursos.show', ['codigo' => $curso->code]) }}">
         Ir al curso
       </x-ui.button>
     </div>
