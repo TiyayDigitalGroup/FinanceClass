@@ -39,6 +39,10 @@ class ExamController extends Controller
 
         $course = Course::findOrFail($request->course_id);
 
+        if ($course->exam) {
+            return redirect()->back()->with('error', 'Este curso ya tiene un examen asignado.');
+        }
+
         $course->exam()->create([
             'title' => $request->title,
             'description' => $request->description,

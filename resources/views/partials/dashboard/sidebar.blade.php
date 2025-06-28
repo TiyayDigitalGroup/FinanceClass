@@ -29,11 +29,16 @@
       <x-icon.book class="size-8 p-2 transition-colors bg-gray-200 rounded-lg group-hover:bg-blue-100" />
       Cursos
     </x-ui.button>
+    <x-ui.button href="{{ route('dashboard.examenes') }}"
+      class="px-4 py-3 text-gray-700 rounded-xl hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 gap-2 group w-full justify-normal">
+      <x-icon.question class="size-8 p-2 transition-colors bg-gray-200 rounded-lg group-hover:bg-blue-100" />
+      Examenes
+    </x-ui.button>
   </nav>
   <div class="flex items-center gap-1.5 px-2.5 py-4">
     <div class="size-5 bg-gray-800 flex items-center justify-center p-5 rounded-full">
-      <span class="text-white font-semibold text-sm uppercase">{{ substr(auth()->user()->name ?? 'Admin', 0, 2)
-        }}</span>
+      <span
+        class="text-white font-semibold text-sm uppercase">{{ substr(auth()->user()->name ?? 'Admin', 0, 2) }}</span>
     </div>
     <div class="leading-tight flex-1 min-w-0 text-sm">
       <span class="truncate block">{{ auth()->user()->name ?? 'Administrador' }}</span>
