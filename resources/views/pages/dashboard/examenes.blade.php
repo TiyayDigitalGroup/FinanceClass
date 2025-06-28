@@ -16,10 +16,6 @@
           <div class="text-2xl font-bold text-blue-600">{{ $examenes->count() }}</div>
           <div class="text-gray-500">Total</div>
         </div>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-green-600">{{ $examenes->where('activo', 1)->count() }}</div>
-          <div class="text-gray-500">Activos</div>
-        </div>
       </div>
     </div>
 
