@@ -106,9 +106,6 @@
                   class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                   Preguntas
                 </th>
-                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Estado
-                </th>
                 <th class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Acciones
                 </th>
@@ -127,17 +124,17 @@
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                       </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">{{ $examen->title }}</div>
-                        <div class="text-sm text-gray-500 md:hidden">{{ $examen->course->title ?? 'Sin curso' }}</div>
-                        @if ($examen->description)
+                      <div class="ml-4 max-w-52 overflow-ellipsis">
+                        <div class="text-sm font-medium text-gray-900 truncate">{{ $examen->title }}</div>
+                        <div class="text-sm text-gray-500 md:hidden truncate">{{ $examen->course->title ?? 'Sin curso' }}</div>
+                        {{-- @if ($examen->description)
                           <div class="text-xs text-gray-400 mt-1 max-w-xs truncate">{{ $examen->description }}</div>
-                        @endif
+                        @endif --}}
                       </div>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap hidden md:table-cell">
-                    <div class="flex items-center">
+                    <div class="flex items-center max-w-min">
                       <span
                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                         {{ $examen->course->title ?? 'Sin curso' }}
@@ -153,15 +150,6 @@
                       </svg>
                       {{ $examen->questions->count() ?? 0 }} preguntas
                     </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $examen->activo ?? true ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                      <div
-                        class="w-1.5 h-1.5 {{ $examen->activo ?? true ? 'bg-green-400' : 'bg-gray-400' }} rounded-full mr-1.5">
-                      </div>
-                      {{ $examen->activo ?? true ? 'Activo' : 'Inactivo' }}
-                    </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div class="flex items-center justify-end space-x-2">
