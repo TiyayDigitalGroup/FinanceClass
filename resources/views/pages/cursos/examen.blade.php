@@ -200,10 +200,14 @@
             </div>
             <div class="flex flex-col sm:flex-row gap-3">
               @if (!session('resultado.aprobado'))
-                <button onclick="closeModal()"
+                {{-- <button onclick="closeModal()"
                   class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
                   Revisar Material
-                </button>
+                </button> --}}
+                <a href="{{ route('cursos.show', ['codigo' => $curso->code]) }}"
+                  class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-sky-600 hover:from-blue-600 hover:to-sky-700 text-white font-semibold rounded-xl text-center transition-all duration-200 transform hover:-translate-y-0.5">
+                  Revisar Material
+                </a>
               @endif
               <a href="{{ route('cursos.index') }}"
                 class="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl text-center transition-all duration-200 transform hover:-translate-y-0.5">
@@ -323,6 +327,8 @@
       });
     </script>
   @else
-    <x-ui.state-poster titulo="Examen del curso: {{ $curso->title }}" mensaje="Es necesario tener una sesion iniciada para realizar el examen" tipo="info" urlVolver="/login" textoBotonVolver="Iniciar sesion" />
+    <x-ui.state-poster titulo="Examen del curso: {{ $curso->title }}"
+      mensaje="Es necesario tener una sesion iniciada para realizar el examen" tipo="info" urlVolver="/login"
+      textoBotonVolver="Iniciar sesion" />
   @endauth
 @endsection
